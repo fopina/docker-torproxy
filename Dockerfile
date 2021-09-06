@@ -1,4 +1,5 @@
-FROM alpine:3.13
+ARG BASE=alpine:3.13
+FROM ${BASE} as lightversion
 
 # tor-0.4.6.7-r0 on edge
 RUN echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
@@ -14,3 +15,4 @@ EXPOSE 8118
 EXPOSE 9050
 
 CMD [ "s6-svscan", "/etc/s6"]
+

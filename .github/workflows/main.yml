@@ -33,7 +33,20 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: build (and publish) docker image
+      - name: build (and publish) LIGHT docker image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: |
+            fopina/torproxy:light
+            fopina/torproxy:light-${{ steps.prepare.outputs.tag_name }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          build-args: |
+            VERSION=${{ steps.prepare.outputs.tag_name }}
+            BASE=alpine:3.13
+          target: lightversion
+
+      - name: build (and publish) FULL docker image
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -43,3 +56,4 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           build-args: |
             VERSION=${{ steps.prepare.outputs.tag_name }}
+            BASE=python:3.9-alpine3.13
