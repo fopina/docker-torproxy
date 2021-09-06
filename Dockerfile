@@ -1,7 +1,8 @@
-FROM alpine:3.11
+FROM alpine:3.13
 
+# tor-0.4.6.7-r0 on edge
 RUN echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
-RUN apk add --no-cache 'tor@edge==0.4.3.5-r0' privoxy s6
+RUN apk add --no-cache 'tor@edge' privoxy s6
 
 ADD s6 /etc/s6
 
